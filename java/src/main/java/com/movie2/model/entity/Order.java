@@ -45,6 +45,7 @@ public class Order implements Serializable {
 	private Integer status;
 
 	/**支付时间**/
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date payAt;
 
 	/**添加时间（格式2022-01-14 11:37:03）**/

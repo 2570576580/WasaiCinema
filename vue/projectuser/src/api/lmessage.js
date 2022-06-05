@@ -8,9 +8,9 @@ export function WorkList() {
 }
 
 //查看我的评价
-export function MyCritic(uid) {
+export function MyCritic(uid,wid) {
     return service({
-        url: '/api/we?uid='+uid,
+        url: '/api/we?uid='+uid+"&wid="+wid,
         method: 'get',
     })
 }

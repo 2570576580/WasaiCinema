@@ -152,11 +152,12 @@ export default {
       message: {},
       msg: "",
       uid: localStorage.getItem("uid"),
+      wid: "",
     };
   },
   mounted() {
     this.QWorkList(); //客服人员列表
-    this.QMyCritic(); //我的评论
+    // this.QMyCritic(); //我的评论
     this.QLMessage(); //留言消息
     globalBus.$on("countNumber", () => {
       this.QLMessage();
@@ -203,17 +204,18 @@ export default {
         console.log(this.memberList);
       });
     },
-    QMyCritic() {
-      MyCritic(localStorage.getItem("uid")).then((res) => {
-        if (res.code == 200) {
-          for (var i = 0; i < res.data.length; i++) {
-            res.data[i].updateTime = this.formatDate(res.data[i].updateTime);
-          }
-          this.viewpointTable = res.data;
-          //console.log(res.data);
-        }
-      });
-    },
+    // QMyCritic() {
+    //   console.log(this.wid);
+    //   MyCritic(localStorage.getItem("uid"), this.wid).then((res) => {
+    //     if (res.code == 200) {
+    //       for (var i = 0; i < res.data.length; i++) {
+    //         res.data[i].updateTime = this.formatDate(res.data[i].updateTime);
+    //       }
+    //       this.viewpointTable = res.data;
+    //       //console.log(res.data);
+    //     }
+    //   });
+    // },
     QLMessage() {
       LMessage().then((res) => {
         if (res.code == 200) {
@@ -232,6 +234,17 @@ export default {
     //点击我的评价按钮时间
     handleMyevaluate(item) {
       this.dialogViewpoint = true;
+      this.wid = item.id;
+      console.log(this.wid);
+      MyCritic(localStorage.getItem("uid"), this.wid).then((res) => {
+        if (res.code == 200) {
+          for (var i = 0; i < res.data.length; i++) {
+            res.data[i].updateTime = this.formatDate(res.data[i].updateTime);
+          }
+          this.viewpointTable = res.data;
+          //console.log(res.data);
+        }
+      });
     },
     handleEvaluate(item) {
       this.dialogVisible = true;

@@ -63,6 +63,7 @@ public class OrderController {
         order.setStatus(vo.getStatus());
         order.setUid(vo.getUid());
         order.setSeats(seats);
+        order.setStatus(2);
 
         count=orderService.insert(order);
 

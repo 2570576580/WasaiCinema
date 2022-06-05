@@ -26,7 +26,7 @@
               <span>{{ props.row.order.price }}</span>
             </el-form-item>
             <el-form-item label="下单时间:">
-              <span>{{ props.row.order.createAt }}</span>
+              <span>{{ props.row.order.createTime }}</span>
             </el-form-item>
             <el-form-item label="支付时间:">
               <span>{{ props.row.order.payAt }}</span>
@@ -119,9 +119,44 @@ export default {
     this.QAllOrder();
   },
   methods: {
+    formatDate(dateint) {
+      //日期格式化，
+      //console.log(dateint);
+      var date = new Date(parseInt(dateint));
+      var str = date.getFullYear() + "-";
+      if (date.getMonth() < 10) {
+        str += "0";
+      }
+      str += date.getMonth() + 1 + "-";
+      if (date.getDate() < 10) {
+        str += "0";
+      }
+      str += date.getDate() + " ";
+      if (date.getHours() < 10) {
+        str += "0";
+      }
+      str += date.getHours() + ":";
+
+      if (date.getMinutes() < 10) {
+        str += "0";
+      }
+      str += date.getMinutes() + ":";
+      if (date.getSeconds() < 10) {
+        str += "0";
+      }
+      str += date.getSeconds();
+      //console.log(str);
+      return str;
+    },
     QAllOrder() {
       AllOrder().then((res) => {
         if (res.code == 200) {
+          for (let i = 0; i < res.data.length; i++) {
+            res.data[i].order.createTime = this.formatDate(
+              res.data[i].order.createTime
+            );
+            res.data[i].order.payAt = this.formatDate(res.data[i].order.payAt);
+          }
           this.tableData = res.data;
         }
       });

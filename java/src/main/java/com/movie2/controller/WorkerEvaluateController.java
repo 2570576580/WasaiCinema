@@ -29,11 +29,14 @@ public class WorkerEvaluateController {
     UserService userService;
 
     @GetMapping("/we")//我的评论
-    public List<WorkerEvaluate> getMyAllWorkerEvaluate(@RequestParam("uid") int uid){
-        log.info("WorkerEvaluateController----------->getMyAllWorkerEvaluate(@RequestParam(\"uid\") int uid)");
+    public List<WorkerEvaluate> getMyAllWorkerEvaluate(@RequestParam("uid") int uid,
+                                                       @RequestParam("wid") int wid){
+        log.info("WorkerEvaluateController----------->getMyAllWorkerEvaluate(@RequestParam(\"uid\") int uid,\n" +
+                "                                                       @RequestParam(\"wid\") int wid)");
         List<WorkerEvaluate> list = new ArrayList<>();
         WorkerEvaluate temp = new WorkerEvaluate();
         temp.setUid(uid);
+        temp.setWid(wid);
         list = workerEvaluateService.selectWorkerEvaluatesByCondition(temp);
         return  list;
     }

@@ -10,9 +10,6 @@
     <el-button type="primary" class="btn" @click="Submit()"
       >上传轮播海报</el-button
     >
-    <el-button type="danger" class="btn" @click="Delete()"
-      >删除所有海报</el-button
-    >
 
     <el-table :data="tableData" style="width: 100%">
       <el-table-column label="上传时间" prop="updateTime"> </el-table-column>

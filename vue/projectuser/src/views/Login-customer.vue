@@ -18,7 +18,12 @@
 
         <div class="btn">
           <el-button class="login-form-button" type="primary" @click="getLogin"
-            >SIGN IN</el-button
+            >登录客户端</el-button
+          >
+        </div>
+        <div class="btn">
+          <el-button class="login-form-button" type="primary" @click="getLogin1"
+            >登录后台</el-button
           >
         </div>
       </div>
@@ -43,21 +48,6 @@ export default {
         username: this.userName,
         password: this.passWord,
       };
-
-      // this.$axios
-      //   .post(this.$store.state.url + "/api/user/login", LoginData)
-      //   .then((res) => {
-      //     if (res.data.success == true) {
-      //       this.$message({
-      //         message: "登陆成功",
-      //         type: "success",
-      //       });
-      //       localStorage.setItem("token", res.data.data.token);
-      //       localStorage.setItem("uid", res.data.data.user.id);
-      //       this.$router.push("/");
-      //     }
-      //   });
-
       Login(LoginData).then((res) => {
         // console.log(res);
         if (res.code == 200) {
@@ -70,6 +60,37 @@ export default {
             });
             console.log(localStorage.getItem("wid"));
             this.$router.push("/customer");
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "warning",
+            });
+          }
+        } else {
+          this.$message({
+            message: res.data.msg,
+            type: "warning",
+          });
+        }
+      });
+    },
+    getLogin1() {
+      const LoginData = {
+        username: this.userName,
+        password: this.passWord,
+      };
+      Login(LoginData).then((res) => {
+        // console.log(res);
+        if (res.code == 200) {
+          if (res.data.success === "success") {
+            localStorage.setItem("token", res.data.token); //localStorage 用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去删除。
+            localStorage.setItem("wid", res.data.worker.id); //保存set  读取get
+            this.$message({
+              message: res.data.msg,
+              type: "success",
+            });
+            console.log(localStorage.getItem("wid"));
+            this.$router.push("/back");
           } else {
             this.$message({
               message: res.data.msg,
@@ -135,7 +156,9 @@ export default {
 }
 .login-form-button {
   font-weight: bold;
-  width: 100%;
+  width: 48%;
   margin-top: 40px;
+  margin-right: 10px;
+  float: left;
 }
 </style>
