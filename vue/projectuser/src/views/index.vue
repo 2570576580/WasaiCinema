@@ -125,7 +125,6 @@ export default {
         str += "0";
       }
       str += date.getDate() + " ";
-      console.log(str);
       return str;
     },
     topListQuery() {

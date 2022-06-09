@@ -33,7 +33,7 @@ public class Film implements Serializable {
 	private String region;
 
 	/**热度**/
-	private Integer hot;
+	private java.math.BigDecimal hot;
 
 	/**介绍**/
 	private String introduction;
@@ -104,11 +104,11 @@ public class Film implements Serializable {
 		return this.region;
 	}
 
-	public void setHot(Integer hot){
+	public void setHot(java.math.BigDecimal hot){
 		this.hot = hot;
 	}
 
-	public Integer getHot(){
+	public java.math.BigDecimal getHot(){
 		return this.hot;
 	}
 

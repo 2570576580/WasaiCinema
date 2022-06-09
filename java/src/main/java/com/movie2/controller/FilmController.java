@@ -198,4 +198,15 @@ public class FilmController {
         }
         return map;
     }
+
+    @PostMapping("/hot/update")
+    public Map<String,Object> updateHot(@RequestBody Film film){
+        log.info("更改：FilmController    --------->  updateHot(@RequestBody Film film) ");
+        Map<String,Object> map =new HashMap<>();
+        int count = filmService.updateByPrimaryKeySelective(film);
+        if(count==1){
+            map.put("success","ok");
+        }
+        return map;
+    }
 }

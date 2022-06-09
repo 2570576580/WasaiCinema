@@ -121,7 +121,10 @@ export default {
           this.timer = setTimeout(() => {
             console.log("countNumber");
             globalBus.$emit("countNumber");
-          }, 10000);
+          }, 500);
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
         }
       });
     },

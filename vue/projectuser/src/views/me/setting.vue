@@ -5,19 +5,15 @@
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item>
           <p>昵称</p>
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.nickname"></el-input>
         </el-form-item>
-        <el-form-item prop="pass">
+        <el-form-item prop="password">
           <p>密码</p>
-          <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="password" v-model="form.password"> </el-input>
         </el-form-item>
         <el-form-item>
           <p>性别</p>
-          <el-radio-group v-model="form.sex">
+          <el-radio-group v-model="form.gender">
             <el-radio label="男"></el-radio>
             <el-radio label="女"></el-radio>
           </el-radio-group>
@@ -28,7 +24,7 @@
             <el-date-picker
               type="date"
               placeholder="选择日期"
-              v-model="form.date1"
+              v-model="form.birthday"
               style="width: 100%"
             ></el-date-picker>
           </el-col>
@@ -36,11 +32,11 @@
 
         <el-form-item prop="email">
           <p>邮箱</p>
-          <el-input v-model="dynamicValidateForm.email"></el-input>
+          <el-input v-model="form.email"></el-input>
         </el-form-item>
         <el-form-item>
           <p>个人简介</p>
-          <el-input type="textarea" v-model="form.desc"></el-input>
+          <el-input type="textarea" v-model="form.info"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">更新基本信息</el-button>
@@ -61,39 +57,25 @@
         </el-upload>
       </div>
       <!-- <el-button type="primary" class="btn">点击上传</el-button> -->
-      <p>只能上传jpg/png图片</p>
+      <p>只能上传jpg图片</p>
     </div>
   </div>
 </template>
 
 
 <script>
-import { ModifySelf } from "@/api/user";
+import { ModifySelf, UserInfo, LogoutUser } from "@/api/user";
 export default {
   data() {
     return {
       imageUrl: "",
-      dynamicValidateForm: {
-        domains: [
-          {
-            value: "",
-          },
-        ],
-        email: "", //邮箱
-      },
-      ruleForm: { pass: "" }, //密码
-      form: {
-        name: "", //昵称
-        region: "",
-        date1: "", //生日
-        date2: "",
-        delivery: false,
-        type: [],
-        sex: "", // 性别
-        desc: "", //个人介绍
-      },
       fileName: "",
+      form: {},
+      oldPs: "",
     };
+  },
+  mounted() {
+    this.queryUser();
   },
   methods: {
     beforeAvatarUpload(file) {
@@ -114,21 +96,52 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     onSubmit() {
+      if (this.fileName == "") {
+        this.fileName = this.imageUrl;
+        this.fileName = this.fileName.slice(21);
+      }
+      console.log(this.form.password);
+      console.log(this.fileName.length);
       let data = {
-        password: this.ruleForm.pass,
         avatar: this.fileName,
-        nickname: this.form.name,
-        email: this.dynamicValidateForm.email,
-        birthday: this.form.date1,
-        gender: this.form.sex,
-        info: this.form.desc,
+        nickname: this.form.nickname,
+        email: this.form.email,
+        birthday: this.form.birthday,
+        gender: this.form.gender,
+        info: this.form.info,
         id: localStorage.getItem("uid"),
       };
+      if (this.form.password !== this.oldPs) {
+        data.password = this.form.password;
+      }
       console.log(data);
 
       ModifySelf(data).then((res) => {
         console.log(res.data);
+        this.$message({
+          type: "success",
+          message: "个人信息更新成功，请重新登录",
+        });
+        this.$router.push("/login");
+        LogoutUser(localStorage.getItem("uid")).then((res) => {
+          if (res.code == 200) {
+            console.log(res.data.token);
+            localStorage.setItem("token", res.data.token);
+            localStorage.clear(); //清理本地存储
+          }
+          this.$router.push("/login");
+        });
       });
+    },
+    queryUser() {
+      if (localStorage.getItem("uid") !== null) {
+        UserInfo().then((res) => {
+          console.log(res);
+          this.form = res.data;
+          this.imageUrl = this.form.avatar;
+          this.oldPs = this.form.password;
+        });
+      }
     },
   },
 };

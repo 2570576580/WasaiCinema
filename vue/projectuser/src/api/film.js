@@ -221,3 +221,11 @@ export function updateFilm(data) {
         data:data
     })
 }
+
+export function updateHot(data) { 
+    return service({
+        url: '/api/film/hot/update',
+        method: 'post',
+        data:data
+    })
+}

@@ -37,6 +37,7 @@
               style="padding-top: 7px"
               v-model="item.filmEvaluate.star"
               disabled
+              show-score
               text-color="#ff9900"
               score-template="{value}"
             ></el-rate>
@@ -54,7 +55,7 @@
 </template>
 
 <script>
-import { FindFilmEvaluate, FindFilmById } from "../../api/film";
+import { FindFilmEvaluate, FindFilmById, updateHot } from "../../api/film";
 import { ConvertJSONDateToJSDate } from "@/api/util.js";
 import { globalBus } from "@/api/globalBus";
 export default {
@@ -64,6 +65,7 @@ export default {
       film: {
         // introduction: "李焕英讲述了.....",
       },
+      newfilm: {},
       filmId: this.$route.query.fid,
       evaluateList: [
         //
@@ -74,6 +76,7 @@ export default {
         // createAt: "2022-03-24",
         // },
       ],
+      avgstar: 0,
     };
   },
   methods: {
@@ -84,7 +87,7 @@ export default {
       FindFilmById(this.filmId).then((res) => {
         if (res.code == 200) {
           this.film = res.data;
-          //console.log(this.film);
+          console.log(this.film);
           // this.film.cover_show=config.API_URL+"/upload?id="+this.film.cover
         }
       });
@@ -96,8 +99,20 @@ export default {
             res.data[i].filmEvaluate.createAt = this.formatDate(
               res.data[i].filmEvaluate.createAt
             );
+            this.avgstar =
+              res.data[i].filmEvaluate.star + parseFloat(this.avgstar);
           }
           this.evaluateList = res.data;
+          this.evaluateList = this.evaluateList.reverse();
+          this.avgstar = Math.round((this.avgstar / res.data.length) * 10) / 10;
+          this.newfilm.hot = this.avgstar;
+          this.newfilm.id = this.film.id;
+
+          updateHot(this.newfilm).then((res) => {
+            if (res.data == 200) {
+              this.avgstar = 0;
+            }
+          });
         }
       });
     },
@@ -127,13 +142,12 @@ export default {
         str += "0";
       }
       str += date.getSeconds();
-      console.log(str);
       return str;
     },
   },
   mounted() {
-    this.queryFilmDetail();
     this.commentQuery();
+    this.queryFilmDetail();
     globalBus.$on("countNumber", () => {
       this.commentQuery();
     });

@@ -192,6 +192,9 @@ export default {
           message: "添加成功",
           type: "success",
         });
+        setTimeout(() => {
+          location.reload();
+        });
         this.fileName = "";
         this.imageUrl = "";
         this.form.status = "";
@@ -203,7 +206,7 @@ export default {
       AllPoster().then((res) => {
         if (res.code == 200) {
           for (var i = 0; i < res.data.length; i++) {
-            res.data[i].updateTime = this.formatDate(res.data[i].updateTime);
+            // res.data[i].updateTime = this.formatDate(res.data[i].updateTime);
           }
           this.tableData = res.data;
         }
@@ -221,6 +224,9 @@ export default {
           type: "success",
         });
         this.dialogVisible1 = false;
+        setTimeout(() => {
+          location.reload();
+        });
       });
     },
 

@@ -115,6 +115,7 @@ public class WorkerController {
     public Worker getWorkerId(@RequestParam("id") int id){
         log.info("UserController---------------->getUserId(@RequestBody LoginVo vo)");
         Worker worker = workerService.selectByPrimaryKey(id);
+        worker.setAvatar(MyConstants.MY_URL+worker.getAvatar());
         return  worker;
     }
 

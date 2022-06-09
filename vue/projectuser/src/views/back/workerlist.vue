@@ -127,6 +127,9 @@ export default {
             type: "success",
           });
           this.dialogVisible = false;
+          setTimeout(() => {
+            location.reload();
+          });
         }
       });
     },

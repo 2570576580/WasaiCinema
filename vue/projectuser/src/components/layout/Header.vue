@@ -147,8 +147,11 @@ export default {
       return arr;
     },
     handleSelect(item) {
+      console.log(item);
       this.$router.push("/film/detail?fid=" + item.id);
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 100);
     },
     handleLogout() {
       //进不来

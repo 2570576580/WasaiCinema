@@ -151,12 +151,12 @@ export default {
     QAllOrder() {
       AllOrder().then((res) => {
         if (res.code == 200) {
-          for (let i = 0; i < res.data.length; i++) {
-            res.data[i].order.createTime = this.formatDate(
-              res.data[i].order.createTime
-            );
-            res.data[i].order.payAt = this.formatDate(res.data[i].order.payAt);
-          }
+          // for (let i = 0; i < res.data.length; i++) {
+          //   res.data[i].order.createTime = this.formatDate(
+          //     res.data[i].order.createTime
+          //   );
+          //   res.data[i].order.payAt = this.formatDate(res.data[i].order.payAt);
+          // }
           this.tableData = res.data;
         }
       });

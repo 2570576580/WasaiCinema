@@ -32,7 +32,7 @@
         </template>
       </el-table-column>
       <el-table-column>
-        <template slot="header" width="300px">
+        <!-- <template slot="header" width="300px">
           <el-input
             v-model="search"
             size="mini"
@@ -42,7 +42,7 @@
           <el-button type="primary" size="mini" class="btn1" @click="Search"
             >搜索</el-button
           >
-        </template>
+        </template> -->
         <template slot-scope="scope">
           <el-button size="mini" type="success" @click="handle1(scope.row)"
             >统计票房</el-button
@@ -196,10 +196,10 @@ export default {
     QAllArangement() {
       AllArrangement().then((res) => {
         if (res.code == 200) {
-          for (let i = 0; i < res.data.length; i++) {
-            res.data[i].startTime = this.formatDate(res.data[i].startTime);
-            res.data[i].endTime = this.formatDate(res.data[i].endTime);
-          }
+          // for (let i = 0; i < res.data.length; i++) {
+          //   res.data[i].startTime = this.formatDate(res.data[i].startTime);
+          //   res.data[i].endTime = this.formatDate(res.data[i].endTime);
+          // }
           this.tableData = res.data;
         }
       });
@@ -250,6 +250,9 @@ export default {
           type: "success",
         });
         this.dialogVisible = false;
+        setTimeout(() => {
+          location.reload();
+        });
       });
     },
   },

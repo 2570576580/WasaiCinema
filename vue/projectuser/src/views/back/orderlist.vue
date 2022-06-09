@@ -129,10 +129,12 @@ export default {
       AllOrder().then((res) => {
         if (res.code == 200) {
           for (var i = 0; i < res.data.length; i++) {
-            res.data[i].order.createTime = this.formatDate(
-              res.data[i].order.createTime
-            );
-            res.data[i].order.payAt = this.formatDate(res.data[i].order.payAt);
+            // res.data[i].order.createTime = this.formatDate(
+            //   res.data[i].order.createTime
+            // );
+            // res.data[i].order.payAt = this.formatDate(res.data[i].order.payAt);
+            // res.data[i].order.updateTime = this.formatDate(
+            //   res.data[i].order.updateTime);
           }
           this.tableData = res.data;
         }

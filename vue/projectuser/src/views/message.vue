@@ -199,6 +199,9 @@ export default {
     QWorkList() {
       WorkList().then((res) => {
         if (res.code == 200) {
+          for (let i = 0; i < res.data.length; i++) {
+            res.data[i].avatar = config.API_URL + res.data[i].avatar;
+          }
           this.memberList = res.data;
         }
         console.log(this.memberList);
@@ -227,6 +230,7 @@ export default {
             );
           }
           this.visiterList = res.data;
+          this.visiterList = this.visiterList.reverse();
           console.log(this.visiterList);
         }
       });
@@ -266,6 +270,9 @@ export default {
               message: "评价成功",
             });
           }
+          setTimeout(() => {
+            location.reload();
+          }, 100);
           this.dialogVisible = false;
         });
       } else {
@@ -292,6 +299,9 @@ export default {
             message: "留言成功",
           });
           this.dialogVisible2 = false;
+          setTimeout(() => {
+            location.reload();
+          }, 500);
         });
       } else {
         this.$message({
@@ -308,7 +318,7 @@ export default {
 .message {
   margin: 100px auto 0;
   width: 1510px;
-  height: 100%;
+  height: 1000px;
   overflow: hidden;
 }
 .kefu {
@@ -323,6 +333,7 @@ export default {
   width: 1000px;
   height: 100%;
   float: left;
+  overflow: auto;
   background-color: rgb(53, 59, 67);
 }
 .kefu_title {

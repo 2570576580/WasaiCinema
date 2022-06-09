@@ -240,10 +240,10 @@ export default {
           this.film.cover = config.API_URL + this.film.cover; //修改图片地址
           this.arrangement = res.data.arrangement;
           //修改时间显示
-          this.arrangement.startTime = this.formatDate(
-            this.arrangement.startTime
-          );
-          this.arrangement.endTime = this.formatDate(this.arrangement.endTime);
+          // this.arrangement.startTime = this.formatDate(
+          //   this.arrangement.startTime
+          // );
+          // this.arrangement.endTime = this.formatDate(this.arrangement.endTime);
         }
         //获得对应的座位信息
         // http://localhost:8888/api/arrangement/getSeats

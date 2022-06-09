@@ -20,11 +20,9 @@ public class Poster implements Serializable {
      private String url;
      private Integer status;
 
-     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-     @JSONField(format="yyyy-MM-dd HH:mm:ss")
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
      private Date createTime;
 
-     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-     @JSONField(format="yyyy-MM-dd HH:mm:ss")
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
      private Date updateTime;
 }

@@ -171,8 +171,10 @@ public class UserController {
         //查询（通过Id查询当前用户）
         User temp = userService.selectByPrimaryKey(user.getId());
         //把原始的密码进行加密
-        String newPass = MD5Util.md5To32String(user.getPassword(),temp.getSlat(),temp.getSlatIndex());
-        user.setPassword(newPass);//加密后的密码
+        if(user.getPassword() != null) {
+            String newPass = MD5Util.md5To32String(user.getPassword(),temp.getSlat(),temp.getSlatIndex());
+            user.setPassword(newPass);//加密后的密码
+        }
         System.out.println(user);
         //修改
         userService.updateByPrimaryKeySelective(user);//通过主键修改其他非空的字段

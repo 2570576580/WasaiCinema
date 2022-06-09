@@ -197,7 +197,7 @@ export default {
   .menu-main {
     // border: 1px solid #000;
     width: 1100px;
-    overflow: hidden;
+    overflow-x: hidden;
     height: 800px;
     .menu-top {
       height: 70px;

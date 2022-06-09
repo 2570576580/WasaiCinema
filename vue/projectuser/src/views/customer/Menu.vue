@@ -176,7 +176,7 @@ export default {
   .menu-main {
     // border: 1px solid #000;
     width: 1100px;
-    overflow: hidden;
+    overflow-x: hidden;
     height: 800px;
     .menu-top {
       height: 70px;
@@ -205,13 +205,12 @@ export default {
       }
     }
     .main {
-      overflow: auto;
-      margin-right: 60px;
+      // margin-right: 60px;
       // float: right;
       // position: relative;
       left: 233px;
       width: 1100px;
-      height: 800px;
+      // height: 100%;
       border-left: 10px solid rgb(190, 190, 190);
       border-top: 10px solid rgb(190, 190, 190);
       // padding-left: 250px;

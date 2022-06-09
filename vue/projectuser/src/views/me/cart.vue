@@ -120,9 +120,9 @@ export default {
             res.data[i].film.cover = config.API_URL + res.data[i].film.cover;
             //数字转字符串
             //res.data[i].cart.id=res.data[i].cart.id+"";
-            res.data[i].arrangement.startTime = this.formatDate(
-              res.data[i].arrangement.startTime
-            );
+            // res.data[i].arrangement.startTime = this.formatDate(
+            //   res.data[i].arrangement.startTime
+            // );
           }
           this.mainlist = res.data;
         }

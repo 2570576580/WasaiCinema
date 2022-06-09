@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import { AddWorker, WorkerInfo } from "../../api/customer";
+import { Modify, WorkerInfo, LogoutWorker } from "../../api/customer";
 export default {
   data() {
     return {
@@ -146,6 +146,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let data = {
+            id: this.ruleForm.id,
             username: this.ruleForm.username,
             nickname: this.ruleForm.nickname,
             password: this.ruleForm.password,
@@ -155,15 +156,24 @@ export default {
             department: this.ruleForm.department,
             entry: 1,
           };
-          AddWorker(data).then((res) => {
+          Modify(data).then((res) => {
             this.$message({
-              message: "添加成功",
+              message: "更新成功",
               type: "success",
+            });
+            this.$router.push("/login1");
+            LogoutWorker(localStorage.getItem("wid")).then((res) => {
+              if (res.code == 200) {
+                console.log(res.data.token);
+                localStorage.setItem("token", res.data.token);
+                localStorage.clear(); //清理本地存储
+              }
+              this.$router.push("/login1");
             });
           });
         } else {
           this.$message({
-            message: "添加失败",
+            message: "更新失败",
             type: "error",
           });
         }

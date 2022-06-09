@@ -138,11 +138,14 @@ export default {
       AddActivity(data).then((res) => {
         if (res.code == 200) {
           this.$message({
-            message: "回复成功",
+            message: "添加成功",
             type: "success",
           });
           this.form = {};
           this.text1 = "";
+          setTimeout(() => {
+            location.reload();
+          }, 500);
           this.dialogVisible = false;
         }
       });
@@ -156,6 +159,9 @@ export default {
             message: "删除成功",
             type: "success",
           });
+          setTimeout(() => {
+            location.reload();
+          }, 500);
         }
       });
     },

@@ -8,7 +8,7 @@
       <div class="text">
         <p v-if="item.user != null">{{ item.user.nickname }}</p>
         <p class="p1">{{ item.leavingMessage.content }}</p>
-        <p>time：{{ item.leavingMessage.createAt }}</p>
+        <p>time：{{ item.leavingMessage.createTime }}</p>
 
         <div v-if="item.leavingMessage.reply != 'null'">
           <p>客服回复</p>
@@ -151,6 +151,9 @@ export default {
             type: "success",
           });
           this.text1 = "";
+          setTimeout(() => {
+            location.reload();
+          }, 500);
         }
       });
       this.dialogVisible = false;

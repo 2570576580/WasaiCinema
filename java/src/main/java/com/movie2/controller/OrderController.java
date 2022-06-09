@@ -93,8 +93,9 @@ public class OrderController {
         //(1) 获得用户
         User user =userService.selectByPrimaryKey(uid);
         //(2)获得订单
-        Order tempOrder = new Order();
-        List<Order> orders = orderService.selectOrdersByCondition(tempOrder);
+        Order ordertemp = new Order();
+        ordertemp.setUid(user.getId());
+        List<Order> orders = orderService.selectOrdersByCondition(ordertemp);
         for (Order order : orders) {
             //获得排片
             Arrangement arrangement = arrangementService.selectByPrimaryKey(order.getAid());

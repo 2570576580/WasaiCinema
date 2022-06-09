@@ -30,7 +30,7 @@
         </template>
       </el-table-column>
       <el-table-column align="right">
-        <template slot="header" width="300px">
+        <!-- <template slot="header" width="300px">
           <el-button type="primary" size="mini" class="btn1" @click="Search"
             >搜索</el-button
           >
@@ -40,7 +40,7 @@
             placeholder="输入关键字搜索"
             class="ipt1"
           />
-        </template>
+        </template> -->
         <template slot-scope="scope">
           <el-button type="primary" @click="handleChange(scope.row)"
             >修改</el-button
@@ -323,6 +323,7 @@ export default {
             res.data[i].releaseTime = this.formatDate(res.data[i].releaseTime);
           }
           this.tableData = res.data;
+          console.log(this.imageUrl);
         }
       });
     },
@@ -330,6 +331,7 @@ export default {
       this.dialogFormVisible2 = true;
       this.ruleForm = row;
       this.ruleForm.id = row.id;
+      this.imageUrl = row.cover;
     },
 
     //排片信息
@@ -338,9 +340,40 @@ export default {
       this.fid = row.id;
       console.log(this.data2);
     },
+    p(s) {
+      return s < 10 ? "0" + s : s;
+    },
     Submit3() {
       this.data2 = this.form;
+      let d = this.data2.startTime;
+      let d2 = this.data2.endTime;
+      let d1 =
+        d.getFullYear() +
+        "-" +
+        this.p(d.getMonth() + 1) +
+        "-" +
+        this.p(d.getDate()) +
+        " " +
+        this.p(d.getHours()) +
+        ":" +
+        this.p(d.getMinutes()) +
+        ":" +
+        this.p(d.getSeconds());
+      let d3 =
+        d2.getFullYear() +
+        "-" +
+        this.p(d2.getMonth() + 1) +
+        "-" +
+        this.p(d2.getDate()) +
+        " " +
+        this.p(d2.getHours()) +
+        ":" +
+        this.p(d2.getMinutes()) +
+        ":" +
+        this.p(d2.getSeconds());
       this.data2.fid = this.fid;
+      this.data2.startTime = d1;
+      this.data2.endTime = d3;
       console.log(this.data2);
       AddArrangement(this.data2).then((res) => {
         this.$message({
@@ -368,6 +401,9 @@ export default {
           type: "success",
         });
         this.dialogVisible = false;
+        setTimeout(() => {
+          location.reload();
+        });
       });
     },
 
@@ -376,6 +412,10 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          if (this.fileName == "") {
+            this.fileName = this.imageUrl;
+            this.fileName = this.fileName.slice(21);
+          }
           let data3 = {
             name: this.ruleForm.name,
             releaseTime: this.ruleForm.releaseTime,
@@ -391,6 +431,9 @@ export default {
             this.$message({
               message: "更新成功",
               type: "success",
+            });
+            setTimeout(() => {
+              location.reload();
             });
           });
         } else {

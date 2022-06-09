@@ -132,10 +132,10 @@ export default {
           console.log(res.data);
           for (var i = 0; i < res.data.length; i++) {
             res.data[i].film.cover = config.API_URL + res.data[i].film.cover;
-            res.data[i].order.createTime = this.formatDate(
-              res.data[i].order.createTime
-            );
-            res.data[i].order.payAt = this.formatDate(res.data[i].order.payAt);
+            // res.data[i].order.createTime = this.formatDate(
+            //   res.data[i].order.createTime
+            // );
+            // res.data[i].order.payAt = this.formatDate(res.data[i].order.payAt);
           }
           this.goodList = res.data;
         }
@@ -181,7 +181,7 @@ export default {
 .order {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 .order span {
   margin-left: 30px;
